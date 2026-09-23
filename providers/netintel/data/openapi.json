@@ -2182,8 +2182,19 @@
                 "type": "object",
                 "properties": {
                   "input": {
-                    "type": "string",
-                    "description": "Text to embed. Also accepts an array of up to 128 strings (64000 chars total)."
+                    "description": "Text to embed. Also accepts an array of up to 128 strings (64000 chars total).",
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "maxItems": 128
+                      }
+                    ]
                   },
                   "model": {
                     "type": "string",
@@ -2285,8 +2296,19 @@
                 "type": "object",
                 "properties": {
                   "input": {
-                    "type": "string",
-                    "description": "Text to embed. Also accepts an array of up to 128 strings (64000 chars total)."
+                    "description": "Text to embed. Also accepts an array of up to 128 strings (64000 chars total).",
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "maxItems": 128
+                      }
+                    ]
                   },
                   "model": {
                     "type": "string",
@@ -2390,8 +2412,19 @@
                 "type": "object",
                 "properties": {
                   "input": {
-                    "type": "string",
-                    "description": "Text to embed. Also accepts an array of up to 256 strings (200000 chars total). Aliases: text, inputs."
+                    "description": "Text to embed. Also accepts an array of up to 256 strings (200000 chars total). Aliases: text, inputs.",
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "maxItems": 256
+                      }
+                    ]
                   },
                   "input_type": {
                     "type": "string",
@@ -6624,8 +6657,18 @@
                 "type": "object",
                 "properties": {
                   "content": {
-                    "type": "object",
-                    "description": "The structured content to translate: a JSON object/array, or a string of HTML, Markdown, or template text. Max 32KB / 500 strings."
+                    "description": "The structured content to translate: a JSON object/array, or a string of HTML, Markdown, or template text. Max 32KB / 500 strings.",
+                    "oneOf": [
+                      {
+                        "type": "object"
+                      },
+                      {
+                        "type": "array"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
                   },
                   "content_type": {
                     "type": "string",
@@ -13768,7 +13811,7 @@
     "/email-intel/analyze": {
       "get": {
         "operationId": "getEmailIntelAnalyze",
-        "summary": "Email verification & deliverability check (email validator",
+        "summary": "Email verification & deliverability check",
         "tags": [
           "email-intel"
         ],
