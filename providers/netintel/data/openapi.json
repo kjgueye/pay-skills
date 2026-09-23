@@ -52,11 +52,11 @@
     "/dns/lookup": {
       "get": {
         "operationId": "getDnsLookup",
-        "summary": "DNS lookup / nslookup / dig API",
+        "summary": "DNS lookup for any domain",
         "tags": [
           "dns"
         ],
-        "description": "DNS lookup / nslookup / dig API — resolve the common DNS record types (A, AAAA, MX, TXT, NS, CNAME, SOA, PTR) for a domain. Parses SPF/DMARC from TXT plus DKIM at the default._domainkey selector, and cross-checks A records across Google/Cloudflare/Quad9 resolvers for propagation consistency.",
+        "description": "DNS lookup for any domain — resolve A, AAAA, MX, TXT, NS, CNAME, SOA and PTR records in one call. Parses SPF/DMARC from TXT plus DKIM at the default._domainkey selector, and cross-checks A records across Google/Cloudflare/Quad9 resolvers for propagation consistency. Also answers nslookup / dig style queries.",
         "parameters": [
           {
             "name": "domain",
@@ -342,11 +342,11 @@
     "/ssl/cert": {
       "get": {
         "operationId": "getSslCert",
-        "summary": "Fast SSL/TLS certificate facts for any domain",
+        "summary": "SSL certificate check for any domain",
         "tags": [
           "ssl"
         ],
-        "description": "Fast SSL/TLS certificate facts for any domain — issuer, subject, SANs, valid from/to, days until expiry, expired/self-signed flags, TLS version, chain length. One TLS handshake, sub-2-second answer. The light, cheap tier under /ssl/analyze (full analysis, grading). No API key.",
+        "description": "SSL certificate check for any domain — issuer, subject, SANs, valid from/to, days until expiry, expired/self-signed flags, TLS version, chain length. One TLS handshake, sub-2-second answer. The light, cheap tier under /ssl/analyze (full analysis, grading). No API key.",
         "parameters": [
           {
             "name": "domain",
@@ -533,11 +533,11 @@
       },
       "post": {
         "operationId": "postSslCert",
-        "summary": "Fast SSL/TLS certificate facts for any domain",
+        "summary": "SSL certificate check for any domain",
         "tags": [
           "ssl"
         ],
-        "description": "Fast SSL/TLS certificate facts for any domain — issuer, subject, SANs, valid from/to, days until expiry, expired/self-signed flags, TLS version, chain length. One TLS handshake, sub-2-second answer. The light, cheap tier under /ssl/analyze (full analysis, grading). No API key.",
+        "description": "SSL certificate check for any domain — issuer, subject, SANs, valid from/to, days until expiry, expired/self-signed flags, TLS version, chain length. One TLS handshake, sub-2-second answer. The light, cheap tier under /ssl/analyze (full analysis, grading). No API key.",
         "requestBody": {
           "required": true,
           "content": {
@@ -1637,7 +1637,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-4o via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.10 per request in USDC. Standard OpenAI chat.completions shape. EVERY call is bounded by a 16000-token combined input budget (real tokenizer) plus the 48000-char cap; output 2048. Vision: up to 4 https image_url parts (detail low/high/auto). Search terms: OpenAI, gpt-4o, vision, image input, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-4o via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.10 per request in USDC. Standard OpenAI chat.completions shape. EVERY call is bounded by a 16000-token combined input budget (real tokenizer) plus the 48000-char cap; output 2048. Vision: up to 4 https image_url parts (detail low/high/auto).",
         "requestBody": {
           "required": true,
           "content": {
@@ -1771,7 +1771,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-4.1 via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.09 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-4.1, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-4.1 via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.09 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -1906,7 +1906,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-4.1-mini via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.005 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-4.1-mini, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-4.1-mini via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.005 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -2791,7 +2791,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-4o-mini via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.005 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-4o-mini, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-4o-mini via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.005 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -2926,7 +2926,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-4.1-nano via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.005 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-4.1-nano, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-4.1-nano via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.005 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -3061,7 +3061,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-5.5 via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.65 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-5.5, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-5.5 via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.65 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -3188,7 +3188,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-5.4 via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.25 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-5.4, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-5.4 via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.25 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -3315,7 +3315,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-5.4-mini via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.04 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-5.4-mini, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-5.4-mini via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.04 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -3442,7 +3442,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-5.4-nano via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.005 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-5.4-nano, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-5.4-nano via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.005 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -3569,7 +3569,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-5.1 via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.15 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-5.1, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-5.1 via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.15 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -3696,7 +3696,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-5-nano via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.005 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-5-nano, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-5-nano via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.005 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -3823,7 +3823,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-5.2 via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.20 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-5.2, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-5.2 via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.20 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -3950,7 +3950,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-5.6-sol via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.65 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-5.6-sol, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-5.6-sol via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.65 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -4077,7 +4077,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-5.6-terra via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.25 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-5.6-terra, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-5.6-terra via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.25 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -4204,7 +4204,7 @@
         "tags": [
           "openai"
         ],
-        "description": "Call OpenAI's gpt-5.6-luna via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.06 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output. Search terms: OpenAI, gpt-5.6-luna, chat completion, LLM, no API key.",
+        "description": "Call OpenAI's gpt-5.6-luna via a single pay-per-call x402 endpoint — no OpenAI account or API key needed, pay $0.06 per request in USDC. Standard OpenAI chat.completions request/response shape, capped input and output.",
         "requestBody": {
           "required": true,
           "content": {
@@ -4439,11 +4439,11 @@
     "/classify": {
       "post": {
         "operationId": "postClassify",
-        "summary": "Classify text into 2-20 caller-supplied labels",
+        "summary": "Classify text into your own categories",
         "tags": [
           "classify"
         ],
-        "description": "Text classification API — zero-shot text classifier / categorization: caller supplies 2–20 labels and Claude Haiku returns the best-matching category with confidence and per-label scores. Route, tag, triage, and detect intent/topic with your own taxonomy in one call.",
+        "description": "Classify text into your own categories — zero-shot: supply 2–20 labels and Claude Haiku returns the best-matching category with confidence and per-label scores. Route, tag, triage, and detect intent or topic with your own taxonomy in one call.",
         "requestBody": {
           "required": true,
           "content": {
@@ -7283,11 +7283,11 @@
     "/whois-rdap/lookup": {
       "get": {
         "operationId": "getWhoisRdapLookup",
-        "summary": "WHOIS domain lookup via RDAP",
+        "summary": "Domain registration lookup, WHOIS via RDAP",
         "tags": [
           "whois-rdap"
         ],
-        "description": "WHOIS domain lookup via RDAP — registrar, creation/expiry/updated dates, nameservers, and status flags from the authoritative registry, plus an actionability score so agents can assess domain trustworthiness, ownership, or availability risk.",
+        "description": "Domain registration lookup, WHOIS via RDAP — registrar, registration and expiry dates, last-updated date, nameservers, and status flags from the authoritative registry, plus an actionability score so agents can assess domain trustworthiness, ownership, or availability risk.",
         "parameters": [
           {
             "name": "domain",
@@ -8057,11 +8057,11 @@
     "/ip-reputation/analyze": {
       "get": {
         "operationId": "getIpReputationAnalyze",
-        "summary": "Check an IP against AbuseIPDB and AlienVault OTX",
+        "summary": "IP reputation and malicious-IP check",
         "tags": [
           "ip-reputation"
         ],
-        "description": "Check an IP address against AbuseIPDB and AlienVault OTX threat feeds. Returns a composite risk score, threat categories, malware families, and full source data.",
+        "description": "IP reputation and malicious-IP check — screens an address against AbuseIPDB and AlienVault OTX threat feeds and returns a composite risk score, threat categories, malware families, and full source data.",
         "parameters": [
           {
             "name": "ip",
@@ -8773,11 +8773,11 @@
     "/crypto/price": {
       "get": {
         "operationId": "getCryptoPrice",
-        "summary": "Spot prices for up to 25 crypto assets in one call",
+        "summary": "Crypto prices for up to 25 coins in one call",
         "tags": [
           "crypto"
         ],
-        "description": "Spot prices for up to 25 crypto assets in one call — USD, EUR, or GBP — from Coinbase with Kraken and CoinGecko fallback; no API key, one flat price. Per asset: price, 24h change when the answering source provides it, source, cache age. 30s cache; unknown symbols land in unresolved without failing the call. 25 prices for one $0.005 call vs 25 single-symbol lookups.",
+        "description": "Crypto prices for up to 25 coins in one call — live cryptocurrency spot prices for BTC, ETH, SOL and more in USD, EUR, or GBP from Coinbase with Kraken and CoinGecko fallback; no API key, one flat price. Per asset: price, 24h change when the source provides it, source, cache age. 30s cache; unknown symbols land in unresolved without failing the call. 25 prices for one $0.005 call vs 25 single-symbol lookups.",
         "parameters": [
           {
             "name": "symbols",
@@ -14033,11 +14033,11 @@
     "/email/verify": {
       "get": {
         "operationId": "getEmailVerify",
-        "summary": "Verify an email address before you send",
+        "summary": "Validate an email address",
         "tags": [
           "email"
         ],
-        "description": "Verify an email address before you send: syntax + MX + disposable/role/free-provider detection in one call, boolean-first (deliverable, safe_to_send) with a machine-readable reason. DNS-level check only — does not confirm the individual mailbox exists (no SMTP probe). For a scored trust report instead of a yes/no gate, see /email-intel/analyze.",
+        "description": "Validate an email address — email verification before you send: syntax + MX + disposable/role/free-provider detection in one call, boolean-first (deliverable, safe_to_send) with a machine-readable reason. DNS-level check only — does not confirm the individual mailbox exists (no SMTP probe). For a scored trust report instead of a yes/no gate, see /email-intel/analyze.",
         "parameters": [
           {
             "name": "email",
@@ -14153,11 +14153,11 @@
       },
       "post": {
         "operationId": "postEmailVerify",
-        "summary": "Verify an email address before you send",
+        "summary": "Validate an email address",
         "tags": [
           "email"
         ],
-        "description": "Verify an email address before you send: syntax + MX + disposable/role/free-provider detection in one call, boolean-first (deliverable, safe_to_send) with a machine-readable reason. DNS-level check only — does not confirm the individual mailbox exists (no SMTP probe). For a scored trust report instead of a yes/no gate, see /email-intel/analyze.",
+        "description": "Validate an email address — email verification before you send: syntax + MX + disposable/role/free-provider detection in one call, boolean-first (deliverable, safe_to_send) with a machine-readable reason. DNS-level check only — does not confirm the individual mailbox exists (no SMTP probe). For a scored trust report instead of a yes/no gate, see /email-intel/analyze.",
         "requestBody": {
           "required": true,
           "content": {
@@ -14555,11 +14555,11 @@
     "/web/extract": {
       "get": {
         "operationId": "getWebExtract",
-        "summary": "Extract a web page or PDF to clean Markdown",
+        "summary": "Extract text from a web page or PDF as clean Markdown",
         "tags": [
           "web"
         ],
-        "description": "Extract article / main content from any URL or PDF to clean, LLM-ready Markdown (web scraper / reader / html-to-markdown) — strips scripts, nav, ads, and boilerplate while preserving headings, links, lists, tables, code blocks, and blockquotes; extracts the text layer from PDFs. Returns Markdown body, title, word count, and a quality grade. For JS-rendered or bot-walled pages a plain fetch can't read, use /exa/contents.",
+        "description": "Extract text from a web page or PDF as clean Markdown — HTML to Markdown for any URL: strips scripts, nav, ads, and boilerplate while preserving headings, links, lists, tables, code blocks, and blockquotes; extracts the text layer from PDFs. Returns Markdown body, title, word count, and a quality grade. Web scraper / reader for article and main content. For JS-rendered or bot-walled pages a plain fetch can't read, use /exa/contents.",
         "parameters": [
           {
             "name": "url",
@@ -15722,7 +15722,7 @@
         "tags": [
           "exa"
         ],
-        "description": "Exa neural web search for AI agents — POST or GET a query, get ranked live results (title, url, published_date, author, score) with optional highlight snippets. Filter by category (news, research paper, github, company, pdf…), domain include/exclude, and publish date. For a direct answer use /exa/answer. No API key, pay per call on Base or Solana.",
+        "description": "Exa neural web search for AI agents — POST or GET a query, get ranked live results (title, url, published_date, author, score) with optional highlight snippets. Filter by category (news, research paper, github, company, pdf, and more), domain include/exclude, and publish date. For a direct answer use /exa/answer. No API key, pay per call on Base or Solana.",
         "parameters": [
           {
             "name": "query",
@@ -15930,7 +15930,7 @@
         "tags": [
           "exa"
         ],
-        "description": "Exa neural web search for AI agents — POST or GET a query, get ranked live results (title, url, published_date, author, score) with optional highlight snippets. Filter by category (news, research paper, github, company, pdf…), domain include/exclude, and publish date. For a direct answer use /exa/answer. No API key, pay per call on Base or Solana.",
+        "description": "Exa neural web search for AI agents — POST or GET a query, get ranked live results (title, url, published_date, author, score) with optional highlight snippets. Filter by category (news, research paper, github, company, pdf, and more), domain include/exclude, and publish date. For a direct answer use /exa/answer. No API key, pay per call on Base or Solana.",
         "requestBody": {
           "required": true,
           "content": {
@@ -20010,7 +20010,7 @@
         "tags": [
           "domain"
         ],
-        "description": "Vet and pick a domain in one call — give candidate names, get back a ranked verdict on which to use and whether it's safe to build on: availability across TLDs, name quality, typosquat exposure, and a factual brand-collision check against similar existing names. Collapses the pick-a-brand-name funnel into one call. Search terms: vet a domain, pick a brand name, check domain before building, choose startup name.",
+        "description": "Vet and pick a domain in one call — give candidate names, get back a ranked verdict on which to use and whether it's safe to build on: availability across TLDs, name quality, typosquat exposure, and a factual brand-collision check against similar existing names. Collapses the pick-a-brand-name funnel into one call.",
         "requestBody": {
           "required": true,
           "content": {
