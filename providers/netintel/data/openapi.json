@@ -3,8 +3,8 @@
   "info": {
     "title": "NetIntel API",
     "version": "1.0.0",
-    "description": "Network intelligence API — 138 endpoints, all pay-per-call via x402 micropayments (USDC on Base or Solana mainnet).\n\nNetIntel is agent fair-trade aligned: transparent per-call pricing in USDC on Base or Solana via x402, no API keys or signup, and automatic no-charge on server errors, upstream failures, and input-validation rejections — failed calls are never billed across NetIntel's network, domain, and data-intelligence endpoints.",
-    "x-guidance": "NetIntel provides 138 network intelligence endpoints covering DNS, SSL/TLS, WHOIS/RDAP, email security, web fingerprinting, and OSINT. Every endpoint is pay-per-call via x402 micropayments (USDC on Base or Solana mainnet — no API keys, no subscriptions). Call any endpoint normally; if unpaid it returns HTTP 402 with payment requirements, then pay and retry. The per-call price is in each operation's x-payment-info.",
+    "description": "Network intelligence API — 141 endpoints, all pay-per-call via x402 micropayments (USDC on Base or Solana mainnet).\n\nNetIntel is agent fair-trade aligned: transparent per-call pricing in USDC on Base or Solana via x402, no API keys or signup, and automatic no-charge on server errors, upstream failures, and input-validation rejections — failed calls are never billed across NetIntel's network, domain, and data-intelligence endpoints.",
+    "x-guidance": "NetIntel provides 141 network intelligence endpoints covering DNS, SSL/TLS, WHOIS/RDAP, email security, web fingerprinting, and OSINT. Every endpoint is pay-per-call via x402 micropayments (USDC on Base or Solana mainnet — no API keys, no subscriptions). Call any endpoint normally; if unpaid it returns HTTP 402 with payment requirements, then pay and retry. The per-call price is in each operation's x-payment-info.",
     "contact": {
       "email": "support@netintel.dev"
     },
@@ -13610,7 +13610,8 @@
         "tags": [
           "breach-check"
         ],
-        "description": "Check if a password has appeared in known data breaches using the HaveIBeenPwned Pwned Passwords API with k-anonymity — the full password is never transmitted, only a 5-character SHA-1 hash prefix — returns breach count and a risk classification so agents can enforce password policies without storing or exposing credentials.",
+        "description": "Deprecated: sends the `password` in the URL, where it can be retained by edge logs, proxies and shell history. Use POST /breach-check/password and send it in the JSON body instead. This form still works and is still supported for existing callers.\n\nCheck if a password has appeared in known data breaches using the HaveIBeenPwned Pwned Passwords API with k-anonymity — the full password is never transmitted, only a 5-character SHA-1 hash prefix — returns breach count and a risk classification so agents can enforce password policies without storing or exposing credentials.",
+        "deprecated": true,
         "parameters": [
           {
             "name": "password",
@@ -13622,6 +13623,99 @@
             }
           }
         ],
+        "x-payment-info": {
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.010000"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-guidance": {
+          "approvalRequirement": "APPROVAL_REQUIREMENT_NOT_REQUIRED",
+          "costObservedUsd": "0.010000",
+          "outputShape": "breached, breach_count, risk_level, score, grade, findings"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "breached": {
+                      "type": "boolean"
+                    },
+                    "breach_count": {
+                      "type": "number"
+                    },
+                    "risk_level": {
+                      "type": "string"
+                    },
+                    "score": {
+                      "type": "number"
+                    },
+                    "grade": {
+                      "type": "string"
+                    },
+                    "findings": {
+                      "type": "array"
+                    }
+                  }
+                },
+                "example": {
+                  "breached": true,
+                  "breach_count": 34521,
+                  "risk_level": "critical",
+                  "score": 0,
+                  "grade": "F",
+                  "findings": [
+                    {
+                      "rule": "critical_breach",
+                      "deduction": -100,
+                      "detail": "Password found 34521 times in known data breaches"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment Required"
+          }
+        }
+      },
+      "post": {
+        "operationId": "postBreachCheckPassword",
+        "summary": "Check a password against HaveIBeenPwned breaches",
+        "tags": [
+          "breach-check"
+        ],
+        "description": "Check if a password has appeared in known data breaches using the HaveIBeenPwned Pwned Passwords API with k-anonymity — the full password is never transmitted, only a 5-character SHA-1 hash prefix — returns breach count and a risk classification so agents can enforce password policies without storing or exposing credentials.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "description": "Password to check against known data breaches (1-500 characters; sent as a query param but only a k-anonymity SHA-1 prefix leaves the server)"
+                  }
+                },
+                "required": [
+                  "password"
+                ]
+              }
+            }
+          }
+        },
         "x-payment-info": {
           "price": {
             "mode": "fixed",
@@ -17681,7 +17775,8 @@
         "tags": [
           "jwt-inspector"
         ],
-        "description": "Decode and inspect any JWT token — extracts header algorithm, payload claims, expiry status, issued-at time, audience, issuer, and subject without requiring the secret — so agents can debug auth issues, check token expiry, and extract identity claims from tokens in pipelines.",
+        "description": "Deprecated: sends the `token` in the URL, where it can be retained by edge logs, proxies and shell history. Use POST /jwt-inspector/decode and send it in the JSON body instead. This form still works and is still supported for existing callers.\n\nDecode and inspect any JWT token — extracts header algorithm, payload claims, expiry status, issued-at time, audience, issuer, and subject without requiring the secret — so agents can debug auth issues, check token expiry, and extract identity claims from tokens in pipelines.",
+        "deprecated": true,
         "parameters": [
           {
             "name": "token",
@@ -17693,6 +17788,153 @@
             }
           }
         ],
+        "x-payment-info": {
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.005000"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-guidance": {
+          "approvalRequirement": "APPROVAL_REQUIREMENT_NOT_REQUIRED",
+          "costObservedUsd": "0.005000",
+          "outputShape": "valid_structure, header, payload, is_expired, seconds_until_expiry, human_expiry, signature_hex, signature_present, security_flags, score, grade, findings"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid_structure": {
+                      "type": "boolean"
+                    },
+                    "header": {
+                      "type": "object"
+                    },
+                    "payload": {
+                      "type": "object"
+                    },
+                    "is_expired": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ],
+                      "description": "null when the token has no exp claim"
+                    },
+                    "seconds_until_expiry": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "human_expiry": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "signature_hex": {
+                      "type": "string"
+                    },
+                    "signature_present": {
+                      "type": "boolean"
+                    },
+                    "security_flags": {
+                      "type": "array"
+                    },
+                    "score": {
+                      "type": "number"
+                    },
+                    "grade": {
+                      "type": "string"
+                    },
+                    "findings": {
+                      "type": "array"
+                    }
+                  }
+                },
+                "example": {
+                  "valid_structure": true,
+                  "header": {
+                    "algorithm": "HS256",
+                    "token_type": "JWT",
+                    "key_id": null
+                  },
+                  "payload": {
+                    "issuer": null,
+                    "subject": "1234567890",
+                    "audience": null,
+                    "expires_at": null,
+                    "expires_at_unix": null,
+                    "issued_at": "2018-01-18T01:30:22.000Z",
+                    "issued_at_unix": 1516239022,
+                    "not_before": null,
+                    "jwt_id": null,
+                    "custom_claims": {
+                      "name": "John Doe"
+                    }
+                  },
+                  "is_expired": null,
+                  "seconds_until_expiry": null,
+                  "human_expiry": null,
+                  "signature_hex": "49f94ac7044948c78a285d904f87f0a4c7897f7e8f3a4eb2255fda750b2cc397",
+                  "signature_present": true,
+                  "security_flags": [
+                    "no_expiry"
+                  ],
+                  "score": 80,
+                  "grade": "B",
+                  "findings": [
+                    {
+                      "rule": "no_expiry_claim",
+                      "label": "No expiry claim",
+                      "impact": -20,
+                      "detail": "JWT has no exp claim — token never expires"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment Required"
+          }
+        }
+      },
+      "post": {
+        "operationId": "postJwtInspectorDecode",
+        "summary": "Decode and inspect any JWT token",
+        "tags": [
+          "jwt-inspector"
+        ],
+        "description": "Decode and inspect any JWT token — extracts header algorithm, payload claims, expiry status, issued-at time, audience, issuer, and subject without requiring the secret — so agents can debug auth issues, check token expiry, and extract identity claims from tokens in pipelines.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "description": "JWT token string (3 dot-separated segments); a 'Bearer ' prefix is stripped automatically"
+                  }
+                },
+                "required": [
+                  "token"
+                ]
+              }
+            }
+          }
+        },
         "x-payment-info": {
           "price": {
             "mode": "fixed",
@@ -19929,7 +20171,8 @@
         "tags": [
           "email-report"
         ],
-        "description": "One call combines domain email authentication (SPF/DKIM/DMARC), email-address intelligence (deliverability, disposable/role detection), and an optional password breach check into a single email-trust report — each section run concurrently with graceful partial-failure handling — so agents can fully vet an email and its domain in one request.",
+        "description": "Deprecated: sends the `password` in the URL, where it can be retained by edge logs, proxies and shell history. Use POST /email-report/full and send it in the JSON body instead. This form still works and is still supported for existing callers.\n\nOne call combines domain email authentication (SPF/DKIM/DMARC), email-address intelligence (deliverability, disposable/role detection), and an optional password breach check into a single email-trust report — each section run concurrently with graceful partial-failure handling — so agents can fully vet an email and its domain in one request.",
+        "deprecated": true,
         "parameters": [
           {
             "name": "email",
@@ -19950,6 +20193,134 @@
             }
           }
         ],
+        "x-payment-info": {
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.150000"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-guidance": {
+          "approvalRequirement": "APPROVAL_REQUIREMENT_NOT_REQUIRED",
+          "costObservedUsd": "0.150000",
+          "outputShape": "email, domain, generated_at, sections, sections_ok, sections_failed, trust_verdict, score, grade, findings"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "domain": {
+                      "type": "string"
+                    },
+                    "generated_at": {
+                      "type": "string"
+                    },
+                    "sections": {
+                      "type": "object"
+                    },
+                    "sections_ok": {
+                      "type": "number"
+                    },
+                    "sections_failed": {
+                      "type": "number"
+                    },
+                    "trust_verdict": {
+                      "type": "string"
+                    },
+                    "score": {
+                      "type": "number"
+                    },
+                    "grade": {
+                      "type": "string"
+                    },
+                    "findings": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "email": "user@example.com",
+                  "domain": "example.com",
+                  "generated_at": "2026-06-16T01:00:00Z",
+                  "sections": {
+                    "authentication": {
+                      "available": true,
+                      "spf": "pass",
+                      "dkim": "present",
+                      "dmarc": "p=reject"
+                    },
+                    "intelligence": {
+                      "available": true,
+                      "deliverability": "deliverable",
+                      "is_disposable": false,
+                      "is_role_based": false,
+                      "is_free_provider": false
+                    },
+                    "breach": {
+                      "available": false,
+                      "error": "not_requested"
+                    }
+                  },
+                  "sections_ok": 2,
+                  "sections_failed": 0,
+                  "trust_verdict": "trusted",
+                  "score": 100,
+                  "grade": "A",
+                  "findings": []
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment Required"
+          }
+        }
+      },
+      "post": {
+        "operationId": "postEmailReportFull",
+        "summary": "One call combines domain email authentication",
+        "tags": [
+          "email-report"
+        ],
+        "description": "One call combines domain email authentication (SPF/DKIM/DMARC), email-address intelligence (deliverability, disposable/role detection), and an optional password breach check into a single email-trust report — each section run concurrently with graceful partial-failure handling — so agents can fully vet an email and its domain in one request.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email address to vet (e.g. user@example.com)"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Optional password — if supplied, the breach section returns {breached, breach_count, risk_level} from a k-anonymity HIBP check; omitted → breach reports error:\"not_requested\""
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              }
+            }
+          }
+        },
         "x-payment-info": {
           "price": {
             "mode": "fixed",
